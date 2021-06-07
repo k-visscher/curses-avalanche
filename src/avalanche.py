@@ -29,8 +29,9 @@ UNSUPPORTED_RESOLUTION_TEXT = "curses-avalanche only supports 80×24 terminals"
 HIGH_SCORE_TEXT = "high score"
 YOUR_SCORE_TEXT = "your score"
 
-ARROW_KEYS_TEXT = "use <- -> keys to move"
-ESCAPE_KEY_TEXT = "escape key to quit"
+ARROW_KEYS_TEXT = "<- ->"
+TO_MOVE_TEXT = "keys to move"
+ESCAPE_KEY_TEXT = "esc key to quit"
 
 PLAYER_SPRITE = "\n".join(
     filter(
@@ -119,28 +120,48 @@ def game_loop(screen) -> None:
             continue
 
         screen.border(*BORDER_STYLE)
-        score_sub_window = screen.derwin(HEIGHT, 20, 0, PLAY_AREA_SIZE)
-        score_sub_window_y, score_sub_window_x = score_sub_window.getmaxyx()
-        score_sub_window.border(*BORDER_STYLE)
+        side_panel_window = screen.derwin(HEIGHT, 20, 0, PLAY_AREA_SIZE)
+        side_panel_window_y, side_panel_window_x = side_panel_window.getmaxyx()
+        side_panel_window.border(*BORDER_STYLE)
 
-        score_sub_window.addstr(
-            int(score_sub_window_y / 2) - 4,
-            int(score_sub_window_x / 2) - int(len(YOUR_SCORE_TEXT) / 2) + 1,
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) - 10,
+            int(side_panel_window_x / 2) - int(len(HIGH_SCORE_TEXT) / 2) + 1,
+            HIGH_SCORE_TEXT,
+        )
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) - 9,
+            int(side_panel_window_x / 2) - int(len(str(high_score)) / 2),
+            str(high_score),
+        )
+
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) - 7,
+            int(side_panel_window_x / 2) - int(len(YOUR_SCORE_TEXT) / 2) + 1,
             YOUR_SCORE_TEXT,
         )
-        score_sub_window.addstr(
-            int(score_sub_window_y / 2) - 3,
-            int(score_sub_window_x / 2) - int(len(str(score)) / 2),
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) - 6,
+            int(side_panel_window_x / 2) - int(len(str(score)) / 2),
             str(score),
         )
 
-        score_sub_window.addstr(
-            int(score_sub_window_y / 2) - 1,
-            int(score_sub_window_x / 2) - int(len(HIGH_SCORE_TEXT) / 2) + 1,
-            HIGH_SCORE_TEXT,
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) + 6,
+            int(side_panel_window_x / 2) - int(len(str(ARROW_KEYS_TEXT)) / 2),
+            str(ARROW_KEYS_TEXT),
         )
-        score_sub_window.addstr(
-            int(score_sub_window_y / 2), int(score_sub_window_x / 2), str(high_score)
+
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) + 7,
+            int(side_panel_window_x / 2) - int(len(str(TO_MOVE_TEXT)) / 2),
+            str(TO_MOVE_TEXT),
+        )
+
+        side_panel_window.addstr(
+            int(side_panel_window_y / 2) + 9,
+            int(side_panel_window_x / 2) - int(len(str(ESCAPE_KEY_TEXT)) / 2),
+            str(ESCAPE_KEY_TEXT),
         )
 
         # draw the player sprite.
