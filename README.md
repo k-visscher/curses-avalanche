@@ -1,4 +1,5 @@
 # curses-avalanche  
+![avalanche screenshot](https://user-images.githubusercontent.com/13816979/120968357-10116100-c769-11eb-8917-90695b9da914.png)
 
 ![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
